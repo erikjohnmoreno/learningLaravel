@@ -15,30 +15,35 @@ class UserController extends \BaseController
         $fb = \Artdarek\OAuth\Facade\OAuth::consumer('Facebook');
 
         if (!empty($code)) {
-            $token = $fb->requestAccessToken($code);
+            try {
+                $token = $fb->requestAccessToken($code);
 
-            $result = json_decode($fb->request('/me'), true);
-            $_SESSION['email'] = $result['email'];
-            $_SESSION['name'] = $result['name'];
-            $_SESSION['facebook_id'] = $result['id'];
-            $user_info = $this->isRegistered($result);
-            if ($user_info == null) {
-                return Redirect::action('UserController@signup');
-            } else {
-                // find user using facebookid = DB::table()->where(fbid = $sessi);
-                // Auth::loginbyid($user->id)
-                // Auth::get()->id;
-                // User::where(facebook_id = session facebookid
+                $result = json_decode($fb->request('/me'), true);
+                $_SESSION['email'] = $result['email'];
+                $_SESSION['name'] = $result['name'];
+                $_SESSION['facebook_id'] = $result['id'];
+                $user_info = $this->isRegistered($result);
+                if ($user_info == null) {
+                    return Redirect::action('UserController@signup');
+                } else {
+                    // find user using facebookid = DB::table()->where(fbid = $sessi);
+                    // Auth::loginbyid($user->id)
+                    // Auth::get()->id;
+                    // User::where(facebook_id = session facebookid
 
-                $find_user = User::where('facebook_id', $_SESSION['facebook_id'])->get()->first();
-                Auth::loginUsingId($find_user->id);
-                return Redirect::action('MovieController@home');
+                    $find_user = User::where('facebook_id', $_SESSION['facebook_id'])->get()->first();
+                    Auth::loginUsingId($find_user->id);
+                    return Redirect::action('MovieController@home');
+                }
+
+                $message = 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
+                echo $message . "<br/>";
+
+                //dd($result);
+            } catch (Exception $e) {
+                var_dump($e);die;
+                echo $e->getMessage();
             }
-            $message = 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
-            echo $message. "<br/>";
-
-            //dd($result);
-
         } else {
             $url = $fb->getAuthorizationUri();
             return Redirect::to((string)$url);
@@ -127,6 +132,8 @@ class UserController extends \BaseController
                 $destination_path = '/Users/eric/Sites/learningLaravel/public/img/avatar/'. $_SESSION['email'];
                 $extension = Input::file('image')->getClientOriginalExtension();
                 $fileName = rand(111111,999999) . '.' . $extension;
+                $avatar = DB::select('select image from users where facebook_id = ?', array(Auth::user()->facebook_id));
+                File::delete(public_path(). '/img/avatar/' . Auth::user()->email . '/' . $avatar[0]->image);
                 Input::file('image')->move($destination_path, $fileName);
                 DB::table('users')
                     ->where('facebook_id', Auth::user()->facebook_id)

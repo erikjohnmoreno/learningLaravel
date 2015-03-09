@@ -11,34 +11,44 @@ class RatingController extends \BaseController
     {
         $input = Input::get('rating');
         $app = Input::all();
-        $rate = new Rating;
-        switch($input) {
-            case 'one':
-                $rate->rate = 1;
-                break;
-            case 'two':
-                $rate->rate = 2;
-                break;
-            case 'three':
-                $rate->rate = 3;
-                break;
-            case 'four':
-                $rate->rate = 4;
-                break;
-            case 'five':
-                $rate->rate = 5;
-                break;
-            case null:
-                return Redirect::action('MovieController@movie', array($app['app_title']));
-                break;
-            default:
-                break;
-        }
-        $rate->user_id = Auth::user()->id;
-        $rate->app_title = $app['app_title'];
-        $rate->save();
+        $rules = array(
+                'rating' => 'required'
+        );
+        $validator = Validator::make($app, $rules);
 
-        return Redirect::action('MovieController@movie', array($app['app_title']));
+
+        $rate = new Rating;
+        if ($validator->passes()) {
+            switch ($input) {
+                case 'one':
+                    $rate->rate = 1;
+                    break;
+                case 'two':
+                    $rate->rate = 2;
+                    break;
+                case 'three':
+                    $rate->rate = 3;
+                    break;
+                case 'four':
+                    $rate->rate = 4;
+                    break;
+                case 'five':
+                    $rate->rate = 5;
+                    break;
+                case null:
+                    return Redirect::action('MovieController@movie', array($app['app_title']));
+                    break;
+                default:
+                    break;
+            }
+            $rate->user_id = Auth::user()->id;
+            $rate->app_title = $app['app_title'];
+            $rate->save();
+
+            return Redirect::action('MovieController@movie', array($app['app_title']));
+        } else {
+            return Redirect::action('MovieController@movie', array($app['app_title']))->withErrors($validator->errors());
+        }
     }
 
     public function deleteRate()

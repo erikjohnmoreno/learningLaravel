@@ -28,7 +28,7 @@ class CommentController extends \BaseController
             return Redirect::action('MovieController@movie', array($comment->app_title));
         }
 
-        return Redirect::action('MovieController@movie', array($input['app_title']));
+        return Redirect::action('MovieController@movie', array($input['app_title']))->withErrors($validator->errors());
     }
 
     public function deleteComment()

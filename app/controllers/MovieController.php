@@ -14,7 +14,6 @@ class MovieController extends \BaseController
           $data = ITunes::search('entity', array('limit' => 200, 'entity' =>'software'));
           $data = json_decode($data, true);
           $itunes_app = $data['results'];
-
           $paginator = $this->paginator($itunes_app, count($itunes_app));
           return View::make('home', compact('itunes_app','paginator'));
     }
@@ -41,7 +40,7 @@ class MovieController extends \BaseController
     {
         if (Auth::check()) {
             $rated = DB::table('ratings')->where('user_id', Auth::user()->id)->get();
-            $paginator = $this->paginator($rated, count($rated) + 1);
+            $paginator = $this->paginator($rated, count($rated));
             return View::make('rated', compact('rated', 'paginator'));
         }
         else {
@@ -72,7 +71,7 @@ class MovieController extends \BaseController
             $end = $total_items - 1;
         }
 
-        for ($i = $offset; $i < $end; $i++) {
+        for ($i = $offset; $i <= $end; $i++) {
             $items[] = $result[$i];
         }
         $paginated = Paginator::make($items, $total_items, $per_page);

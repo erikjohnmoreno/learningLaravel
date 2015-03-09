@@ -3,6 +3,8 @@
 <div class="container col-md-6">
     {{ Form::label('comment', 'Comments',['class' => 'jumbotron']) }}
     <ul>
+        <br/>
+        <strong style="color: maroon; font-size: larger">{{ HTML::ul($errors->all(), array('class' => 'errors')) }}</strong>
         <h1 style="color: black; background-color: lightblue">{{ $app_title }}</h1>
         @foreach ($itunes_app as $app)
             @if ($app['trackName'] == $app_title)
@@ -69,7 +71,7 @@
                     @if (!$check_comment)
                         {{ Form::open(['url'=> '/comment', 'class' => 'form']) }}
                         {{ Form::hidden('app_title', $app_title) }}
-                    {{ Form::label('body', 'Comment:') }}
+                    {{ Form::label('body', 'Comment on this App') }}
                     {{ Form::textarea('body', null, ['class'=>'form-control']) }}
                         <div class="form-group">
                             {{ Form::submit('Submit Comment', ['class'=> 'btn btn-primary']) }}
@@ -89,7 +91,7 @@
         </section>
     </div>
 @else
-    <div class="section-padding">
+    <div class="section-padding"><br/>
     {{ "login to Comment/Rate this app" }}
     </div>
 @endif
