@@ -1,0 +1,20 @@
+header {
+    font-family: 'Lucida Grande', Verdana, Arial, sans-serif;
+    font-size: 14px;
+    background: #F2F4F5;
+    background-color: #000000;
+}
+
+.top-menu {
+    background-color: #86D2B6;
+    position: fixed;
+    z-index: 1;
+}
+
+.bottom-menu {
+    padding: 150px;
+    background-color: #463C54;
+}
+div.user-info {
+    background-color: blue;
+}
