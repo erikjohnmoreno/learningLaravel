@@ -1,8 +1,8 @@
 body {
-    font-size: 20px;
+    font-family: 'Lucida Grande', Verdana, Arial, sans-serif;
+    font-size: 15px;
     background: #F2F4F5;
 }
-
 .background {
     position: absolute;
     left: 0;
@@ -23,10 +23,11 @@ body {
 }
 
 .header-text {
-    color: #ffffff;
+    color: #000000;
 }
 
 .navbar {
+    background-color: darkgray;
     border-radius: 0;
     position: fixed;
     width: 100%;
@@ -67,7 +68,8 @@ body {
 }
 
 .bottom-menu {
-    background: #e2e2e2;
+    background: darkgray;
+    /*background: #e2e2e2;*/
     color: #bcc3ca;
     padding: 39px 0 42px;
     margin: 150px 0 0 0;
@@ -86,12 +88,13 @@ body {
 
 .bottom-menu a
 {
-    color: inherit;
+    color: #000000;
 }
 
 .active .bottom-menu a, .bottom-menu a:hover, .bottom-menu a:focus
 {
-    color: #e47054;
+    color: #ffffff;
+    /*color: #e47054;*/
     text-decoration: none;
 }
 
@@ -124,7 +127,7 @@ body {
     }
 
     .header-text {
-        color: #fa5950;
+        color: #000000;
     }
 
     .bottom-menu .navbar-brand, .bottom-menu .bottom-links {

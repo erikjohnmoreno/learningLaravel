@@ -62,7 +62,7 @@ class MovieController extends \BaseController
 
     public function paginator($result, $total_items)
     {
-        $per_page = 9;
+        $per_page = 11;
         $offset = ((Paginator::getCurrentPage() - 1) * $per_page);
         $end = $offset + $per_page;
         $items = array();

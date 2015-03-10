@@ -1,10 +1,10 @@
 @extends('layout')
 @section('content')
-    <div class="section-padding">
+    <div class="section-padding col-md-8">
         <br/>
         <div class="col-lg-5" style="word-break: break-word;">
             <strong>Name:</strong> &nbsp;{{ $name }}<br/>
-            <strong>Description:</strong> &nbsp;{{ $about }}<br/>
+            <strong>Description:</strong> &nbsp;{{ $about }}<br/><br/>
             {{--{{ Form::label('name', "Name: $name") }}<br/>--}}
             {{--{{ Form::label('about', "Description: $about") }}--}}
         </div>
@@ -15,12 +15,12 @@
             @else
                 {{ HTML::image('/img/avatar/'. $personal_folder. '/'. $image) }}
             @endif
+                <br/><br/>
                 {{ Form::open(array('url' => '/upload', 'files' => true)) }}
-                {{ Form::file('image') }}
+                {{ Form::file('image') }}<br/>
                 {{ Form::submit('Upload Image', array('class' => 'btn btn-primary')) }}
                 {{ Form::close() }}
             </div>
-
             <div class="col-md-6">
                 {{ Form::open(['url' => '/profile']) }}
                 {{ Form::label('describe', "Describe Yourself") }}

@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 <div class="container col-md-6">
-    {{ Form::label('comment', 'Comments',['class' => 'jumbotron']) }}
+    <br/>
     <ul>
         <br/>
         <strong style="color: maroon; font-size: larger">{{ HTML::ul($errors->all(), array('class' => 'errors')) }}</strong>
@@ -62,12 +62,6 @@
             <div class="jumbotron text-center">
 
                 <div>
-                        <div style="text-align: left">
-                        <strong style="font-size: larger; color: #000000">Comments:</strong><br/>
-                        @foreach ($comments as $comment)
-                                {{ HTML::image('/img/avatar/'. $comment->email. '/'. $comment->image,'alt', array('width' => 40, 'height' => 40)) }}&nbsp;<strong style="color: #660066">{{ $comment->name}}</strong><br/>&nbsp;&nbsp;&nbsp;{{ $comment->body }}<br/>
-                        @endforeach
-                        </div>
                     @if (!$check_comment)
                         {{ Form::open(['url'=> '/comment', 'class' => 'form']) }}
                         {{ Form::hidden('app_title', $app_title) }}
@@ -84,6 +78,13 @@
                         {{ Form::submit('Delete Comment', ['class' => 'btn btn-primary']) }}
                         {{ Form::close() }}
                     @endif
+
+                        <div style="text-align: left">
+                            <strong style="font-size: larger; color: #000000">Comments:</strong><br/>
+                            @foreach ($comments as $comment)
+                                {{ HTML::image('/img/avatar/'. $comment->email. '/'. $comment->image,'alt', array('width' => 40, 'height' => 40)) }}&nbsp;<strong style="color: #660066">{{ $comment->name}}</strong><br/>&nbsp;&nbsp;&nbsp;{{ $comment->body }}<br/>
+                            @endforeach
+                        </div>
                 </div>
 
                 {{ Form::close() }}
